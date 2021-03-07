@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const user = [{
+            name: '李四',
+            score: 89
+        }, {
+            name: '张三',
+            score: 60
+        }, {
+            name: '王五',
+            score: 54
+        }];
+
+        // every，全满足返回true
+        const res = user.every(function(item) {
+            return item.score >= 60;
+        })
+        console.log(res ? '全部及格' : '有同学没及格');
+
+        // some，一个满足返回true
+        const res2 = user.some((item) => item.score >= 80);
+        console.log(res2 ? '有人优秀' : '没人优秀');
+
+        // filter，满足条件返回该item
+        const res3 = user.filter(function(item) {
+            return item.score > 50 && item.score < 60;
+        })
+        console.log(res3);
+
+        // map方法
+        let arr = ['hdcms', 'cms'];
+        let hd = arr.map(item => `${item}-map`);
+        console.log(hd);
+        console.log(arr);
+
+        // 改变原数组里对象
+        let lessons = [{
+            title: '响应式布局',
+            category: 'css'
+        }, {
+            title: 'flex布局',
+            category: 'css'
+        }, {
+            title: 'mysql多表查询',
+            category: 'mysql'
+        }];
+        lessons.map(function(item) {
+            item.click = 100;
+        });
+        console.table(lessons);
+
+        // 不改变原数组里对象，生成新数组新对象
+        let les2 = lessons.map(function(item) {
+            // return Object.assign({click:100},item);
+            return {
+                title: item.title,
+                category: item.category,
+                click: 200
+            }
+        })
+        console.table(lessons);
+        console.table(les2);
+
+
+        // reduce
+        let arr0 = [1, 2, 3, 1, 2, 3];
+
+        let total = arr0.reduce((total, item) => total += item, 0);
+        console.log(total);
+    </script>
+
+
+</body>
+
+</html>

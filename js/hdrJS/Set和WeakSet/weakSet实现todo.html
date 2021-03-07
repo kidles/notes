@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+        }
+        
+        a {
+            display: block;
+            text-decoration: none;
+            background-color: red;
+        }
+        
+        .show {
+            margin: 10px;
+            width: 200px;
+            height: 30px;
+            background-color: yellow;
+        }
+        
+        .close {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="show"><a href="">1</a></div>
+    <div class="show"><a href="">2</a></div>
+    <div class="show"><a href="">3</a></div>
+    <div class="show"><a href="">4</a></div>
+
+    <script>
+        class Todo {
+            constructor() {
+                this.items = document.querySelectorAll('div');
+                this.lists = new WeakSet();
+                this.items.forEach(item => this.lists.add(item));
+            }
+
+            run() {
+                this.addEvent();
+            }
+
+            addEvent() {
+                this.items.forEach(item => {
+                    let a = document.querySelector('a');
+                    a.addEventListener('click', e => {
+                        const parentEle = e.target.parentElement;
+                        if (this.lists.has(parentEle)) {
+                            console.log('添加');
+                            parentEle.classList.add('close');
+                            this.lists.delete(parentEle);
+                        } else {
+                            // alert('todo 已经删除了');
+                            parentEle.classList.remove('close');
+                            this.lists.add(parentEle);
+                        }
+                    })
+                })
+            }
+        }
+
+        let todo = new Todo();
+        todo.run();
+    </script>
+</body>
+
+</html>

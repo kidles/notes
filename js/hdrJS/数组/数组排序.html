@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let cart = [{
+            name: 'iphone',
+            price: 12000
+        }, {
+            name: 'imac',
+            price: 3900
+        }, {
+            name: 'ipad',
+            price: 1200
+        }, ];
+        // 大到小
+        cart = cart.sort((a, b) => a.price - b.price);
+        console.log(cart);
+        // 小到大
+        cart = cart.sort((a, b) => b.price - a.price);
+        console.log(cart);
+    </script>
+</body>
+
+</html>

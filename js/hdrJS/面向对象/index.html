@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let user = {
+            name: '向军',
+            grade: [{
+                name: 'js',
+                score: 88
+            }, {
+                name: 'php',
+                score: 90
+            }, {
+                name: 'docker',
+                score: 70
+            }],
+            average() {
+                let total = this.grade.reduce((t, l) => t + l.score, 0);
+                return `${this.name}的平均分是：${total/this.grade.length}`
+            }
+        }
+        console.log(user.average());
+
+        // 添加属性，删除属性
+        user.age = 30;
+        delete user.age;
+
+        // 展开
+        let kidles = {
+            name: 'kidles',
+            lang: 'zh',
+            age: 24
+        };
+        let user2 = {...user,
+            kidles
+        }
+
+        // 解构赋值
+        let {
+            name,
+            age
+        } = kidles;
+
+        console.log(name, age);
+
+        // 变量传对象
+        let name1 = '后盾人';
+        let url = 'houdunren.com';
+        let lesson = {
+            title: 'js'
+        };
+        port = 8080;
+        let opt = {
+            name1,
+            url,
+            lesson,
+            // port
+        };
+        console.log(opt);
+
+        // 多层对象解构 | 改名 | 默认值
+        let {
+            name1: name2,
+            port: port2 = '没有这个属性',
+            lesson: {
+                title
+            }
+        } = opt;
+        console.log(name2, port2, title);
+    </script>
+</body>
+
+</html>

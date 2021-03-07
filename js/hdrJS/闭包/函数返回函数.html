@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 每次调用函数使用新的内存空间，函数里的变量一般是不能累加的
+        // 因为返回了一个函数，
+        // 只要该函数不被清空，那么和该函数同一作用域的变量就能保存下来，进行累加操作
+        // 总而言之，正在被使用的环境就不会清掉
+
+        // 这种形式不能让n累加
+        function hd() {
+            let n = 1;
+
+            function sum() {
+                console.log(++n);
+            }
+            sum();
+        }
+        // 闭包形式
+        function hd2() {
+            let n = 1;
+            return function() {
+                let m = 1;
+                return function() {
+                    console.log(++m);
+                    console.log(++n);
+                }
+            }
+        }
+
+        let a = hd2()();
+        a();
+        a();
+
+        // a和b函数使用的是不同的内存空间，所以n是不同的
+        let b = hd2()();
+        b();
+    </script>
+</body>
+
+</html>

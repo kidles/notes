@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 展开语法
+        let hd = [1, 2, 3];
+        // 放
+        let [a, b, c] = [...hd];
+        // 收
+        let [d, ...edu] = [1, 2, 3, 4];
+        console.log(edu);
+
+        function sum(...args) {
+            console.log(args);
+            return args.reduce((a, b) => a + b);
+        }
+
+        function dum(discount = 0, ...price) {
+            let total = price.reduce((a, b) => a + b);
+            return Math.round(total * (1 - discount));
+        }
+        console.log(dum(0.1, 100, 200, 400));
+
+        // this
+        // 方法里的普通函数this指向window
+        // 可以const This = this;(旧)
+        // 某些方法可以传this作为参数
+        let lessons = {
+            site: '后盾',
+            lists: ['js', 'css', 'mysql'],
+            show: function() {
+                // const This = this;
+                // return this.lists.map(function(value) {
+                //     console.log(This);
+                // })
+
+                // return this.lists.map(function(value) {
+                //     return `${this.site},${value}`;
+                // }, this);
+
+                // 箭头函数在父级作用域找this,这里的this时show方法的this，是lessons
+                return this.lists.map(item => `${this.site},${item}`);
+            }
+        }
+        console.log(lessons.show());
+
+        // apply call bind 可以改变this
+        let lisi = {
+            name: '李四'
+        };
+        let wangwu = {
+            name: "王五"
+        };
+
+        function User(web, url) {
+            console.log(web + url + this.name);
+        }
+        // 立刻执行
+        User.call(lisi, '后盾人', 'houdunren.com');
+        User.apply(lisi, ['后盾人', 'houdunren']);
+
+        let arr = [1, 2, 3, 4, 5];
+        console.log(Math.max(...arr));
+        console.log(Math.max.call(Math, ...arr));
+        console.log(Math.max.apply(Math, arr));
+
+        // bind,不立刻执行，返回一个函数，需要运行
+        // 可以先绑定，之后再传值调用
+        function hh(a, b) {
+            return this.f + a + b;
+        }
+        obj = {
+            f: 1
+        };
+        hh.call(obj, 1, 2);
+        let func = hh.bind(obj, 1, 2);
+        let func2 = hh.bind(obj);
+        func(3, 4);
+    </script>
+
+</body>
+
+</html>

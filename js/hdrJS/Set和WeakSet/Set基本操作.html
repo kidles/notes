@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 不重复的集合，保存值类型
+        let set = new Set();
+        set.add(1);
+        set.add('1');
+        console.log(set);
+
+        let set2 = new Set(['hdcms', 'hdhdhd']);
+        console.log(set2.size); // 元素个数
+        console.log(set2.has('hdcms')); // 是否存在
+        console.log(set2.delete('hdcms')); //不存在返回false
+        console.log(set2.clear()); // 清空
+
+        // set转array 
+        let set3 = new Set([1, 2, 3, 4, 5, 6]);
+        console.log(Array.from(set3));
+        console.log([...set3]);
+
+        //array转set,去掉重复元素
+        let array = [1, 2, 3, 4, 5, 2, 3, 1];
+        array = [...new Set(array)];
+        console.log(array);
+
+        // 遍历
+        set3.forEach(function(value, key, arr) {
+            console.log(value);
+        })
+        for (const v of set3) {
+            console.log(v);
+        }
+
+        // 数组去重,并集
+        let a = new Set([1, 2, 3, 4, 5]);
+        let b = new Set([4, 5, 6, 7, 8]);
+        console.log(new Set([...a, ...b]));
+
+        // a有b有，交集
+        console.log(
+            [...a].filter(function(item) {
+                return b.has(item);
+            })
+        );
+
+        // a有b没有，差值
+        console.log([...a].filter(item => !b.has(item)));
+        // b有a没有
+        console.log([...b].filter(item => a.has(item)));
+    </script>
+</body>
+
+</html>

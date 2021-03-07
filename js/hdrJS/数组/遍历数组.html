@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        lessons = [{
+            title: '媒体查询响应式布局',
+            category: 'css'
+        }, {
+            title: 'flex布局',
+            category: 'css'
+        }, {
+            title: 'mysql多表查询随意操作',
+            category: 'mysql'
+        }];
+
+        // for i++
+        for (let i = 0; i < lessons.length; i++) {
+            lessons[i].title = `后盾人|${lessons[i].title}`;
+        }
+        console.table(lessons);
+        // for of
+        for (let objs of lessons) {
+            objs.title = `后盾人|${objs.title}`;
+        }
+        console.table(lessons);
+        // for in
+        for (let i in lessons) {
+            lessons[i].title = `后盾人|${lessons[i].title}`;
+        }
+        console.table(lessons);
+
+        // forEach
+        lessons.forEach((item, index, lessons) => {
+            item.title = item.title.substr(0, 2);
+        })
+        console.table(lessons);
+    </script>
+</body>
+
+</html>

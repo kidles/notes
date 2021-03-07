@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let fruit = [{
+            name: 'apple',
+            price: 18
+        }, {
+            name: 'banana',
+            price: 20
+        }, {
+            name: 'orange',
+            price: 30
+        }, {
+            name: 'milk',
+            price: 4
+        }, ];
+
+        function between(min, max) {
+            return function(v) {
+                return v.price >= min && v.price <= max;
+            }
+        }
+
+        let res = fruit.filter(between(18, 20));
+        console.table(res);
+    </script>
+</body>
+
+</html>

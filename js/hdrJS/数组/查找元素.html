@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = ['a', 'b', 'c', 'd', 'b'];
+        // 左到右匹配
+        console.log(arr.indexOf('b')); // 1
+        console.log(arr.indexOf('f')); // 没有返回-1
+        // 右到左匹配
+        console.log(arr.lastIndexOf('b')); //4
+
+        // 原生方法
+        console.log(arr.includes('a')); // true
+        console.log(arr.includes('f')); // false
+
+        // 实现includes方法原理
+        function own(arr, item) {
+            for (let value of arr) {
+                if (value === item) {
+                    return true;
+                }
+            }
+            return false;
+            // return arr.indexOf(item) !== -1 ? true : false;
+        }
+        console.log(own(arr, 'a'));
+
+
+
+        // find返回值，没有返回undefined
+        let state = arr.find(function(item) {
+            return item == 'b';
+        });
+        console.log(state);
+
+        // findindex返回找到的值的下标
+        let state2 = arr.findIndex(item => item === 'b');
+        console.log(state2);
+
+        // find函数原理实现
+        function findx(array, callback) {
+            for (let value of array) {
+                if (callback(value)) return value;
+            }
+            return undefined;
+        }
+        // 通过原型链实现find函数原理
+        Array.prototype.findE = function(callback) {
+            for (let v of this) {
+                if (callback(v)) return v;
+            }
+            return undefined;
+        }
+
+        // 测试自己写的find函数原理实现
+        let res = findx(arr, function(item) {
+            return item === 'b';
+        })
+        console.log(res);
+        let res2 = arr.findE(item => item === 'b');
+        console.log(res2);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="hd">innerHTMl</div>
+
+    <script>
+        // 麻烦方式
+        let func = new Function('title', 'console.log(title)');
+
+        // 函数声明
+        function hd() {
+            console.log('Hello');
+        }
+
+        // 函数表达式
+        let cms = function(title) {
+            console.log(title);
+        }
+
+        // 对象里声明函数
+        let user = {
+            name: null,
+            setUserName: function(name) {
+                this.name = name;
+            },
+            // 简写
+            getUserName() {
+                return this.name;
+            }
+        }
+        user.setUserName('后盾人');
+        user.getUserName();
+
+        // 不建议独立使用函数，要编到类里面
+        // 全局函数声明会覆盖window对象的方法
+        function screenx() {
+            console.log('1');
+        }
+        // 这里win会成为window的属性
+        var win = function() {
+            console.log('cms');
+        };
+        // 这里不会
+        let win2 = function() {
+            console.log('cms');
+        }
+
+        // 函数声明的方式会函数提升，函数表达式不会
+        show();
+
+        function show() {
+            console.log('show');
+        }
+
+        function sum(...args) {
+            return args.reduce((a, b) => a + b, 0);
+        }
+        console.log(sum(1, 2, 3, 4, 5, 6, 7));
+
+        // 立即执行函数
+        // 形成私有作用域，引入多个模块时防止函数重名（旧），推荐后面模块化方法（类，import）
+        (function(window) {
+            function hd() {
+                console.log('hd');
+            }
+
+            function show() {
+                console.log('show');
+            }
+            window.js1 = {
+                hd,
+                show
+            };
+        })(window);
+        js1.hd();
+
+        // 形参，实参,多余实参会忽略
+        function sum(a, b) {
+            return a + b;
+        }
+        console.log(sum(1, 2, 3, 4));
+
+        // 默认参数,一般放在后面
+        function avg(total, year = 1) {
+            // year = year || 1; //旧写法，year默认undefined
+            return Math.round(total / year);
+        }
+        console.log(avg(2000));
+
+        function sortArray(arr, type = 'asc') {
+            return arr.sort((a, b) => type === 'asc' ? a - b : b - a);
+        }
+        console.log(sortArray([3, 2, 4, 7, 6, 8, 0]));
+
+        // 打两次几折，返回总价，
+        function disTotal(total, discount = 0, dis = 0) {
+            return total * (1 - discount / 10) * (1 - dis / 10);
+        }
+        console.log(disTotal(200, 1, 1));
+
+        // 函数作为参数，arguments
+        function hd(a) {
+            return a >= 3;
+        }
+        let arr1 = [1, 2, 3, 4, 56, 7].filter(hd);
+        console.log(arr1);
+
+        document.getElementById('hd').addEventListener('click', event);
+
+        function event() {
+            alert(this.innerHTML);
+        }
+
+        // 用...args就不用再把arguments转成数组
+        function sum2(...args) {
+            let total = 0;
+            // return [...arguments].reduce((a, b) => a + b, 0);
+            return args.reduce((a, b) => a + b, 0);
+        }
+
+        // 箭头函数,()只有一个参数去掉括号，只有return语句不写return,没有this
+        let hd2 = [1, 2, 3, 4, 5, 6, 7, 8].filter(value => value >= 3);
+        let sum3 = hd2.reduce((a, b) => a + b, 0);
+
+        // 递归
+        console.clear();
+        // n的阶乘
+        function fact(num) {
+            if (num === 1) {
+                return 1;
+            }
+            return num * fact(num - 1);
+            //简写 return num === 1 ? 1 : num * fact(num - 1);
+        }
+        console.log(fact(5));
+
+        // *号打印三角形
+        function star(num) {
+            if (num === 0) {
+                return '';
+            };
+            document.write('*'.repeat(num) + '<br/>');
+            return star(num - 1);
+            // 极限简写
+            // return num ?
+            //     document.write('*'.repeat(num) + '<br/>') || star(--num) :
+            //     '';
+        }
+        star(5);
+
+        // 回调函数
+        let hh = [1, 2, 3, 4];
+        // 生成新数组
+        let hh2 = hh.map(function(value, index, hh) {
+            value += 10;
+        });
+        // 改变原数组
+        hh.map(function(value, index, hh) {
+            hh[index] = value + 10;
+        });
+    </script>
+</body>
+
+</html>

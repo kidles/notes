@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 一般形式
+        function Hd() {
+            let n = 1;
+            this.sum = function() {
+                console.log(++n);
+            }
+        }
+        // 普通形式
+        function Hd2() {
+            let n = 1;
+
+            function sum() {
+                console.log(++n);
+            }
+            return {
+                sum: sum
+            }
+        }
+
+        let a = new Hd();
+        a.sum();
+        a.sum();
+        let b = new Hd();
+        b.sum();
+        b.sum();
+    </script>
+</body>
+
+</html>

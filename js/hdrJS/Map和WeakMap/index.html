@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 对象的键值只能是字符串或symbol
+        // Map类型可以用引用类型作为键值
+
+        let map = new Map();
+        map.set({
+            id: 2011
+        }, '后盾人');
+        let map2 = new Map([
+            ['hdcms', '开源系统'],
+            ['houdunren', '在线教程']
+        ]);
+        // 链式操作
+        map.set({
+            id: 2012
+        }, 'hd').set({
+            id: 2013
+        }, 'cms');
+        console.log(map);
+
+
+        let map3 = new Map();
+        obj = {
+            name: '后盾'
+        };
+        map3.set(obj, '人')
+        map.get(obj);
+
+        map3.has(obj);
+        map3.delete(obj);
+        map3.clear();
+
+
+        for (const [key, value] of map.entries()) {
+            console.log(key, value);
+        }
+        map.forEach((value, key) => {
+            console.log(key, value);
+        })
+
+        // 转换成数组
+        console.clear();
+        console.log([...map]);
+        console.log([...map.keys()]);
+        console.log([...map.values()]);
+        console.log([...map.entries()]);
+        for (const [key, value] of map.entries()) {
+            console.log(key, value);
+        }
+
+        console.clear();
+        // map转成数组使用数组方法
+        // map转成[[{id:...},'hd'],[{id:...},'cms'],[键,值]]
+        // item是一个数组，item[0]是键，item[1]是值
+        let newArr = [...map].filter(item => {
+            return item[1].includes('hd');
+        })
+        let newMap = new Map(newArr);
+        console.log([...newMap.values()]);
+
+        console.clear();
+        // weakMap的键必须是对象，和WeakSet一样不能迭代
+    </script>
+</body>
+
+</html>

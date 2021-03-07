@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>内容1</div>
+    <div>内容2</div>
+    <div>内容3</div>
+
+    <script>
+        const div = document.querySelectorAll('div');
+        // 第一种方法
+        Array.from(div, function(item) {
+            console.log(item);
+        });
+        // 第二种方法
+        Array.prototype.map.call(div, function(item) {
+            console.log(item);
+        });
+        // 第三种方法
+        [...div].map(function(item) {
+            item.addEventListener('click', function() {
+                this.classList.toggle('hide');
+            })
+        })
+    </script>
+</body>
+
+</html>
