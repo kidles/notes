@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 属性操作
+        let hd = {};
+        hd.name = 'kid';
+        hd['age'] = 18;
+        delete hd.name;
+        console.log(hd.hasOwnProperty(name));
+
+        let a = {
+            name: '后盾人'
+        };
+        let b = {
+            url: 'houdunren.com'
+        };
+        // 设置a的原型是b
+        Object.setPrototypeOf(a, b);
+        console.log(a);
+        // a是否有url属性
+        console.log(a.hasOwnProperty('url')); // 不看原型
+        console.log('url' in a); // 看原型
+        console.log(a.url);
+        console.clear();
+
+        // 计算属性
+        let lessons = [{
+            title: 'js课程1',
+            category: 'js'
+        }, {
+            title: 'js课程2',
+            category: 'js'
+        }, {
+            title: 'css课程3',
+            category: 'css'
+        }];
+        let res = lessons.reduce((obj, cur, index) => {
+            obj[`${cur['category']}-${index}`] = cur;
+            return obj;
+        }, {});
+        console.log(JSON.stringify(res, null, 2));
+
+        // 拷贝函数，但还是浅拷贝
+        let c = Object.assign(a, b);
+        console.log(c);
+        console.clear();
+
+        console.log(Object.keys(c));
+        console.log(Object.values(c));
+        // 对象转成 [[key,value],[],[]...]形式
+        console.log(JSON.stringify(Object.entries(c), null, 2));
+        console.clear();
+
+        // 遍历对象，for in
+        for (let key in lessons) {
+            console.log(key, lessons[key]);
+        }
+        // 一般情况遍历对象用不了for of
+        // 这里先把对象变成数组，解构给了key，value
+        for (let [key, value] of Object.entries(lessons)) {
+            console.log(key, value);
+        }
+        console.clear();
+
+        // Dom绘制
+        let ul = document.createElement('ul');
+        for (let lesson of lessons) {
+            let li = document.createElement('li');
+            li.innerHTML = `课程：${lesson.title},分类：${lesson.category}`;
+            ul.appendChild(li)
+        }
+        document.body.appendChild(ul);
+
+        // 浅赋值方法
+        let a1 = {
+            name: 'k',
+            age: 24
+        };
+        let b1 = {...a1
+        };
+        let c1 = Object.assign(a1);
+        // 拷贝中间还进行其他操作的用下面这种
+        let d1 = {};
+        for (let key in a1) {
+            d1[key] = a1[key] + '（复制a1）';
+        }
+        console.log(d1);
+    </script>
+</body>
+
+</html>

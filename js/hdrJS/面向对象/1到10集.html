@@ -66,7 +66,7 @@
         };
         console.log(opt);
 
-        // 多层对象解构 | 改名 | 默认值
+        // 多层对象解构 | 别名 | 默认值，有值就覆盖
         let {
             name1: name2,
             port: port2 = '没有这个属性',
@@ -75,6 +75,18 @@
             }
         } = opt;
         console.log(name2, port2, title);
+
+        // 函数参数解构使用
+        function hd1(name, {
+            sex,
+            age
+        }) {
+            console.log([name, sex, age]);
+        }
+        hd1('湘军', {
+            sex: 'male',
+            age: 18
+        });
     </script>
 </body>
 
