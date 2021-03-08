@@ -22,7 +22,7 @@
                 name: 'docker',
                 score: 70
             }],
-            average() {
+            average: function() {
                 let total = this.grade.reduce((t, l) => t + l.score, 0);
                 return `${this.name}的平均分是：${total/this.grade.length}`
             }

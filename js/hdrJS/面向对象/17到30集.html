@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 17 工厂函数
+        function user(name, age) {
+            return {
+                name,
+                age: age,
+                show() {
+                    console.log(this.name);
+                },
+                info: function() {
+                    console.log(`姓名：${this.name},年龄：${this.age}`);
+                }
+            }
+        }
+        let user1 = user('kid', 24);
+
+        // 18 构造函数
+        function User(name) {
+            this.name = name;
+            this.show = function() {
+                console.log(this.name);
+            };
+            // 默认返回，一般不写
+            // return this;
+        }
+        let user11 = new User('kidles', 25);
+
+        // 19 数据通过构造函数创建
+        // new Number(),new String(),new Boolean(),
+        // new Object(),new Array(),new Function()
+        // new Date(),new RegExp(),
+
+        // 20 面向对象的封装和抽象
+        // 添加this属性变成变量声明方式，让属性和方法封装起来
+        function User2(name, age) {
+            let data = {
+                name,
+                age,
+            }
+            let info = function() {
+                return data.age > 50 ? '老年' : '青年';
+            }
+            this.show = function() {
+                console.log(data.name + info());
+            }
+        }
+
+        // 21 读取对象的属性特征
+        // 值，是否可写，是否遍历，是否删除或配置
+        const userA = {
+            name: 'kid',
+            age: 18
+        }
+        console.log(
+            JSON.stringify(Object.getOwnPropertyDescriptor(userA, 'name'), null, 2));
+        console.log(
+            JSON.stringify(Object.getOwnPropertyDescriptors(userA), null, 2));
+        console.clear();
+
+        // 22 控制属性的特征
+        // 还有Object.defineProperties()对多个属性设置特征
+        Object.defineProperty(userA, 'name', {
+            value: '后盾人',
+            writable: true,
+            enumerable: true,
+            configurable: true // 设置为false就不能再definedProperty
+        })
+        userA.name = 'k';
+        for (let v of Object.entries(userA)) {
+            console.log(v[0], v[1]);
+        }
+        console.clear();
+
+
+        // 23 不允许对对象添加属性API
+        Object.preventExtensions(userA);
+        // 判断对象是否允许添加属性
+        if (Object.isExtensible(userA)) {
+            userA.url = 'houndunre.com';
+            console.log(userA.url);
+        }
+
+        // 24 封闭对象API（不能：添加属性、修改属性特征、删除对象）
+        Object.seal(userA);
+        Object.isSealed(userA);
+
+        // 25 冻结对象API,（不能：添加属性、修改属性、修改属性特征）
+        Object.freeze(userA);
+        Object.isFrozen(userA);
+
+        // 26 访问器控制属性值，读取属性值
+        const userB = {
+            data: {
+                name: '后盾人',
+                age: 18
+            },
+            set age(value) {
+                if (typeof value !== 'number' || value > 120 || value < 0) {
+                    throw new Error('年龄错误');
+                }
+                this.data.age = value;
+            },
+            get age() {
+                return this.data.age + '岁';
+            }
+        }
+        console.log(userB.age);
+
+        // 27 访问器伪造属性
+        // 26就实现了
+
+        // 28 访问器批量设置属性(小技巧)
+        const web = {
+            name: '后盾人',
+            url: 'houndunren.com',
+            set site(value) {
+                [this.name, this.url] = value.split(',');
+            },
+            get site() {
+                return `网站：${this.name},域名：${this.url}`;
+            }
+        }
+        web.site = '开源产品,https://www.houdunren.com';
+        console.log(web.site);
+
+        // 29 token令牌
+        // 使用访问器操作localStorage，存取token值
+        let Request = {
+            set token(content) {
+                localStorage.setItem('token', content);
+            },
+            get token() {
+                let token = localStorage.getItem('token');
+                if (!token) {
+                    alert('请登录');
+                }
+                return token;
+            }
+        }
+
+        Request.token = '3456987654wert';
+        console.log(Request.token);
+
+        // 30 访问器优先级
+        // 不太重要
+    </script>
+</body>
+
+</html>

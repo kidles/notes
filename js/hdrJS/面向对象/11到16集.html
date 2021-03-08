@@ -80,7 +80,7 @@
         }
         document.body.appendChild(ul);
 
-        // 浅赋值方法
+        // 浅拷贝方法
         let a1 = {
             name: 'k',
             age: 24
@@ -94,6 +94,31 @@
             d1[key] = a1[key] + '（复制a1）';
         }
         console.log(d1);
+        console.clear();
+
+        // 深拷贝
+        function copy(obj) {
+            // 判断传入的是数组还是对象，保持结构一致
+            let res = obj instanceof Array ? [] : {};
+            for (let key in obj) {
+                res[key] = typeof value == 'object' ? copy(obj[key]) : obj[key];
+            }
+            return res;
+
+            // 使用for of 和 Object.entries
+            // 无论数组还是对象都转成[[k,v],[],[]...]
+            // for (let [key, value] of Object.entries(obj)) {
+            //     res[key] = typeof value == 'object' ? copy(value) : value;
+            // }     
+        }
+        let a2 = {
+            name: 'kid',
+            age: 19,
+            arr: [],
+            obj: {}
+        };
+        let res2 = copy(a2);
+        console.log(res2);
     </script>
 </body>
 

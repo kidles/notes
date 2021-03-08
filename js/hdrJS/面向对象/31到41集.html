@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 31 构造函数使用访问器
+        function User(name, age) {
+            let data = {
+                name,
+                age
+            }
+            Object.defineProperties(this, {
+                name: {
+                    get name() {
+                        return data.name;
+                    },
+                    set name(val) {
+                        if (val.trim() == '' || val.length > 20) {
+                            throw new Error('用户名格式错误');
+                        }
+                        data.name = val;
+                    }
+                },
+                age: {
+                    get age() {
+                        return data.age;
+                    },
+                    set age(num) {
+                        data.age = num;
+                    }
+                }
+            })
+        }
+        // class语法使用访问器
+        class UserA {
+            constructor(name, age) {
+                this.data = {
+                    name,
+                    age
+                };
+            }
+            get name() {
+                return this.data.name;
+            }
+            set name(val) {
+                if (val.trim() == '' || val.length > 20) {
+                    throw new Error('用户名格式错误');
+                }
+                this.data.name = val;
+            }
+            get age() {
+                return this.data.age;
+            }
+            set age(num) {
+                this.data.age = num;
+            }
+        }
+
+        // 32 Proxy代理基本语法
+        // 通过代理存取对象数据
+        const hd = {
+            name: '后盾人',
+            url: 'www.houndunren.com'
+        };
+        const proxy = new Proxy(hd, {
+            get(obj, property) {
+                return obj[property];
+            },
+            set(obj, property, value) {
+                obj[property] = value;
+                return true;
+            }
+        })
+        console.log(proxy.name);
+        proxy.name = '湘军';
+        console.log(proxy.name);
+
+        // 33-38 Proxy代理相关课，没看
+
+        // 39 JSON数据解决什么问题
+        // 通用数据格式，传值，键值对的字符串
+        let data = {
+                name: '后盾人',
+                data: {
+                    title: 'php'
+                }
+            }
+            // 对象转成json字符串
+        let json = JSON.stringify(data, null, 2);
+        console.log(json);
+        // json字符串转成js对象
+        let obj = JSON.parse(json);
+        console.log(obj);
+    </script>
+</body>
+
+</html>
