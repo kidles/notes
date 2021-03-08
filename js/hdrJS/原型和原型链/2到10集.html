@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 5,6,7 原型关系
+        let arr = [];
+        let str = "";
+        let bool = true;
+        let reg = /a/i;
+        let obj = {};
+        console.log(arr.__proto__ == Array.prototype);
+        console.log(str.__proto__ == String.prototype);
+        console.log(bool.__proto__ == Boolean.prototype);
+        console.log(reg.__proto__ == RegExp.prototype);
+        console.log(obj.__proto__ == Object.prototype);
+        console.log('|');
+        // 构造函数形式 
+        function User() {};
+        let user1 = new User();
+        console.log(user1.__proto__);
+        console.log(user1.prototype); //非构造函数没有prototype
+        console.log(user1.__proto__ == User.prototype);
+        console.log(User.__proto__.__proto__ == Object.prototype);
+        console.log(User.prototype.__proto__ == Object.prototype);
+        console.log('|');
+        //Object
+        console.log(Object.prototype.__proto__); //null
+        console.log(Object.__proto__.__proto__); //一个对象
+        console.dir(Object.__proto__.__proto__.__proto__); //null
+        console.clear();
+
+        // 8 设置原型，获取原型
+        let hd = {
+            name: 'hd'
+        };
+        let parent = {
+            name: 'parent',
+            age: 56,
+            show() {
+                // this根据当前使用的对象
+                console.log(this.name);
+            }
+        };
+        Object.setPrototypeOf(hd, parent);
+        parent.show();
+        hd.show();
+        console.log(hd.age); //hd没设置，继承了parent的age属性
+        console.log(Object.getPrototypeOf(hd));
+        console.clear();
+
+        // 9 原型中的construction
+        function UserA(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        console.log(UserA.prototype.constructor == UserA); //true
+        let lisi = new UserA.prototype.constructor('李四');
+        let zs = new UserA('张三');
+        console.log(lisi);
+        console.log(zs);
+        // 保留原型链，添加方法,
+        // 后期可以通过对象找到prototype.constructor,再创建对象
+        UserA.prototype = {
+            constructor: UserA,
+            show() {
+                console.log(this.name);
+            }
+        };
+
+        // 10 通过对象生对象
+        function createByObj(obj, ...args) {
+            const constructor = Object.getPrototypeOf(obj).constructor;
+            return new constructor(...args);
+        }
+        let ww = createByObj(lisi, '王五', 30);
+        console.log(ww);
+    </script>
+</body>
+
+</html>
