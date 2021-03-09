@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 24 不要轻易改变构造函数的原型
+        // 25 继承是原型的继承
+        function User() {};
+        User.prototype.name = function() {
+            console.log('user.name');
+        }
+
+        function Admin() {};
+        Admin.prototype.role = function() {
+            console.log('admin.role')
+        }
+
+        function Member() {};
+        Member.prototype.role = function() {
+            console.log('member.log');
+        };
+        // 实现继承
+        Member.prototype.__proto__ = User.prototype;
+        Admin.prototype.__proto__ = User.prototype;
+        console.log(Admin.prototype); //User
+        console.log(Admin.prototype.__proto__); //User.prototype
+        console.log(Admin.prototype.__proto__.__proto__); // Object.prototype
+        console.log(Admin.prototype.__proto__.__proto__.__proto__);
+        // null
+
+        let admin = new Admin();
+        admin.role();
+        let member = new Member();
+        member.role();
+        console.clear();
+
+        // 26 继承对新增对象的影响
+        // 27 继承对constructor的影响
+        // 28 禁止constructor被遍历
+        Object.defineProperty(Admin.prototype, 'constructor', {
+            value: Admin,
+            enumerable: false
+        })
+        for (const k in admin) {
+            console.log(k);
+        }
+
+        // 29-39 有空再看
+        // 理由 原始方法类和对象的创建，先用Es6语法
+    </script>
+</body>
+
+</html>

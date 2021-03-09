@@ -82,6 +82,20 @@
         }
         let ww = createByObj(lisi, '王五', 30);
         console.log(ww);
+
+        // 11 总结
+
+        // 12 原型链检测
+        console.log(ww instanceof UserA);
+        console.log(ww instanceof Object);
+        Object.setPrototypeOf(ww, parent);
+        console.log(ww instanceof UserA);
+
+        //13 检测原型,某对象是不是另一个对象的原型
+        let a = {};
+        let b = {};
+        Object.setPrototypeOf(a, b);
+        console.log(b.isPrototypeOf(a));
     </script>
 </body>
 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button class="cls">按钮1</button>
+    <button class="cls">按钮2</button>
+    <button>按钮3</button>
+
+    <script>
+        // 14 in 和 hasOwnProperty
+        let a = {
+            url: "houdunren"
+        };
+        let b = {
+            name: '后盾人'
+        };
+        Object.setPrototypeOf(a, b);
+        // in 会检测来自原型链的属性
+        for (let k in a) {
+            console.log(a[k]);
+        }
+        // hasOwnproperty不会检测来自原型链的属性
+        for (let k in a) {
+            if (a.hasOwnProperty(k)) {
+                console.log(a[k]);
+            }
+        }
+        console.clear();
+
+        // 15,16 使用call和apply实现本身没有的功能
+        let hd = {
+            data: [1, 2, 3, 4, 8, 66, 4]
+        };
+        // 返回最大值
+        let fn = {
+            max(data) {
+                return data.sort((a, b) => b - a)[0];
+            }
+        }
+        Object.setPrototypeOf(hd, fn);
+
+        console.log(hd.max(hd.data));
+        // 简洁写法
+        console.log(Math.max.apply(null, hd.data));
+
+        let xj = {
+            lessons: {
+                js: 10,
+                php: 5,
+                node: 100
+            }
+        }
+        let res = hd.max.call(null, Object.values(xj.lessons));
+        console.log(res);
+        console.log(Math.max.apply(null, Object.values(xj.lessons)));
+
+        // 17 筛选dom节点，类数组使用数组方法
+        let btns = document.querySelectorAll('button');
+        // []也是数组，可以使用原型链上的方法
+        btn = [].filter.call(btns, item => {
+            return item.hasAttributes('class');
+        });
+        console.log(btn);
+
+        // 18 合理的构造函数方法声明
+        function User(name) {
+            this.name = name;
+        }
+        // 把方法写在原型，避免每个对象都生成一个方法占用空间
+        User.prototype = {
+            // 保证通过对象找到原型
+            construtor: User,
+            show() {
+                console.log(this.name);
+            },
+            get() {
+                console.log('get...');
+            }
+        }
+        let lisi = new User('李四');
+        let zhangsan = new User('张三');
+        lisi.show();
+        zhangsan.show();
+        console.log(lisi);
+
+        // 19 this指向当前调用的对象，和原型链无关
+
+        // 20 不要滥用原型
+        // 不要在系统的原型追加方法
+        // 可能和第三方库冲突
+
+        // 21 非标准 Object.create() 和 __ptoto__ 设置获取原型
+        // 不太建议
+        let user = {
+            show() {
+                return this.name;
+            }
+        };
+        // 这种方式不能获取原型
+        // let hd = Object.create(user, {
+        //     name: {
+        //         value: '后盾人'
+        //     }
+        // })
+        let hd = {
+            name: '后盾人'
+        };
+
+        hd.__proto__ = user;
+        console.log(hd.__proto__);
+
+        // 22 标准 setPrototypeOf/getPrototypeOf
+        // 建议使用
+
+        // 23 __proto__ 原拉是属性访问器
+        // setter 和 getter 实现的
+        // 赋值是会判断是否是对象，不是不执行
+    </script>
+</body>
+
+</html>

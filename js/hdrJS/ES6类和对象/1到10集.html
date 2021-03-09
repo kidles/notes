@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1~5 class 声明类的语法
+        // 本质还是操作原型和原型链
+        class User {
+            // 还是对象的属性，部分浏览器不支持，不推荐
+            site = '后盾人';
+            constructor(name) {
+                this.name = name;
+            }
+            getName() {
+                return this.site + ' ' + this.name;
+            }
+        }
+        let hd = new User('湘军');
+        console.log(hd.getName());
+        // 声明的方法不会被遍历
+        // 原理：方法属性的特征的可遍历属性设置成了false
+        for (let key in hd) {
+            console.log(key);
+        }
+
+        // 6 class下默认使用严格模式
+        // 7 静态属性
+        // 分配给构造函数的属性叫静态属性
+        class Request {
+            // 静态属性，所有对象共用属性，减少内存占用
+            static host = 'https://www.houndunren.com';
+            api(url) {
+                return Request.host + `/${url}`;
+            }
+        }
+        let hd2 = new Request();
+        console.log(hd2.api('article'));
+
+        // 8 静态方法,供 构造函数/类 使用
+        class Member {
+            constructor(name, age, sex) {
+                this.name = name,
+                    this.age = age,
+                    this.sex = sex
+            }
+            static create(...args) {
+                return new this(...args);
+            }
+        }
+        let xj = Member.create('湘军', '30', '男');
+        console.log(xj);
+        console.clear();
+
+        // 9 课程管理的类
+        const data = [{
+            name: 'js',
+            price: 60
+        }, {
+            name: 'php',
+            price: 88
+        }, {
+            name: 'node',
+            price: 70
+        }, ];
+        class Lesson {
+            constructor(data) {
+                this.model = data;
+            };
+            static createLesson(data) {
+                return data.map(item => new Lesson(item));
+            };
+            // price最大值的对象
+            static maxPrice(data) {
+                return data.sort((a, b) => b.price - a.price)[0];
+            };
+            // price的总价
+            static total(data) {
+                return data.reduce((t, l) => t + l.price, 0);
+            };
+            // 访问器 伪属性
+            get name() {
+                return this.model.name;
+            }
+            get price() {
+                return this.model.price;
+            }
+        }
+        let Lessons = Lesson.createLesson(data);
+        console.log(Lessons);
+        console.log(Lessons[0].name + ':' + Lessons[0].price);
+        console.log(Lesson.maxPrice(data));
+        console.log(Lesson.total(data));
+
+        // 10 类中使用访问器
+    </script>
+</body>
+
+</html>
