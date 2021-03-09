@@ -10,7 +10,126 @@
 
 <body>
     <script>
-        // 11 保护属性
+        // 保护属性：protected，不想让外部访问到
+        // 11 使用命名规则实现保护属性 protected 
+        class User {
+            // 私有属性,
+            // 命中控制，url访问器设置，要访问还是访问到...
+            _url = 'houndunren.com';
+            constructor(name) {
+                // 开放属性 public
+                this.name = name;
+            }
+            set url(url) {
+                if (!/https?:/i.test(url)) {
+                    throw new Error('网址格式不对');
+                }
+                this._url = url;
+            }
+        }
+        let hd = new User('后盾人');
+        hd.name = '李四';
+        hd.url = 'https://www.houudnren.com';
+        console.log(hd);
+
+        // 12 使用symbol实现保护属性，类和子类能使用
+        let protects = Symbol();
+        class Basic {
+            constructor() {
+                // 需要的保护属性可以全压到这里
+                this[protects] = {};
+                this[protects].host = 'http://houdunren.com';
+            }
+            set url(url) {
+                if (!/https?:/i.test(url)) {
+                    throw new Error('网址格式不对');
+                }
+                this[protects].host = url;
+            };
+            // 不写getter就访问不到
+            get url() {
+                return this[protects].host;
+            }
+        }
+        class UserA extends Basic {
+            constructor(name) {
+                super();
+                // 保护属性类和子类都能使用
+                this[protects].name = name;
+            }
+        }
+        let hd2 = new UserA('后盾人');
+        console.log(hd2);
+        console.log(hd2);
+
+        // 13 使用weakMap实现保护属性，先不看
+
+        // 14 私有属性、私有方法 private 只能本类里使用
+        class Basic2 {
+            // 私有属性
+            #host = 'https://www.houdunren.com';
+            constructor(name) {
+                this.name = name;
+                this.#check(name);
+            }
+            set host(url) {
+                if (!/https?:/i.test(url)) {
+                    throw new Error('网址格式不对');
+                }
+                this.#host = url;
+            };
+            get host() {
+                return this.#host;
+            }
+            // 实现私有方法
+            #check = ()=>{
+                if(this.name.length<5){
+                    throw new Error('名字长度不能小于5位')
+                }
+            }
+        }
+        let hd3 = new Basic2('后盾后盾人');
+        // hd3.#host = 'https://qwertyu';
+        hd3.host = 'https://baidu.com';
+        // console.log(hd3.#host);
+        console.log(hd3.host);
+        // console.log(hd3.#check());
+
+        // 15 继承
+        class User1{
+            constructor(name){
+                this.name = name;
+            }
+        }
+        class UserB extends User1{
+            constructor(name){
+                super(name)
+            }
+        }
+
+        // 16-19 讲原理 
+
+        // 20 使用super访问父类方法
+        class User11{
+            constructor(name){
+                this.name = name;
+            }
+            show(){
+                console.log('show.log');
+            }
+        }
+        class UserB1 extends User11{
+            constructor(name){
+                super(name)
+            }
+            // 重写方法并调用父类方法
+            show(){
+                super.show();
+            }
+        }
+
+        // 21-31没看
+
     </script>
 </body>
 
