@@ -34,7 +34,6 @@
         // 7 静态属性
         // 分配给构造函数的属性叫静态属性
         class Request {
-            // 静态属性，所有对象共用属性，减少内存占用
             static host = 'https://www.houndunren.com';
             api(url) {
                 return Request.host + `/${url}`;
@@ -42,6 +41,7 @@
         }
         let hd2 = new Request();
         console.log(hd2.api('article'));
+        console.log(hd2.host);
 
         // 8 静态方法,供 构造函数/类 使用
         class Member {
@@ -56,7 +56,7 @@
         }
         let xj = Member.create('湘军', '30', '男');
         console.log(xj);
-        console.clear();
+        // console.clear();
 
         // 9 课程管理的类
         const data = [{

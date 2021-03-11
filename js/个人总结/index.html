@@ -10,9 +10,38 @@
 
 <body>
     <script>
-        let str = 'wertyu4567';
-        let arr = [...str];
-        console.log(arr);
+        class User{
+            static #sshow(){
+                console.log('staticfn');
+            }
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+            show(){
+                console.log('User.showfn');
+            }
+        }
+        class Admin extends User{
+            static count = 10;
+            constructor(name,age,like){
+                super(name,age)
+                this.like = like;
+                this.show = this.show.bind(this);
+            }
+            show(){
+                super.show();
+                console.log('Admin.show')
+                console.log(this);
+            }
+        }
+        let p1 = new User('kid',19);
+        console.log(p1.qwer); 
+        let c1 = new Admin('gg',29,8);
+        let c2 = new Admin('cc',80,0);
+        c1.show();
+        console.log(c1);
+
     </script>
 </body>
 

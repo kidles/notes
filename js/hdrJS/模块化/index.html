@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        // 基本
+        // 格式 AMD require.js/Cmd sea.js/COMMONJS NODE.js/UMD 
+        // 模块默认使用严格模式，
+        // 后解析
+        // 不同的模块不同作用域
+        // import多次只执行一次
+        // 
+        // 2 开发一个模块管理引擎,没看
+
+        // 3 模块的基本使用
+        // 7-8 全导入，别名
+        import {title as a,url,show,show2} from "./hd.js";
+        // 这种方式避免多个文件的值/函数等重名
+        import * as api from './hd3.js';
+        // 9 默认导出，只有一个时可以这么写，
+        import User from './xj.js';
+        import UserXJ2,{xj2site} from './xj2.js';
+        console.log(UserXJ2.show());
+        console.log(a);
+        show();
+        show2();
+        
+        // 
+
+    </script>
+
+</body>
+</html>

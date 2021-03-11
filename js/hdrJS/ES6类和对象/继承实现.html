@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 继承实现
+        // 同一构造函数实例化的所有对象的原型对象是同一个
+        function Parent(name){
+            this.name = name;
+            this.arr = [1];
+        }
+        // 写在原型里是实例化对象的方法，不是类的
+        Parent.prototype.show = function(){
+            console.log('P.show');
+        }
+        function Child(name,like){
+            // 实现继承，C可以输入P的构造函数的参数
+            Parent.call(this,name,like);
+            this.like = like;
+        }
+        // 1，这种方式产生多余的父类实例对象，不太好
+        //    实例化的对象有prototype属性，所以Child实例化的对象也能用P.prototype里的方法
+        // Child.prototype = new Parent();
+        // 2，这种方式修改C的构造器后，P的构造器也会改变，不行
+        // Child.prototype = Parent.prototype 
+        // 3,较完美方式，生成一个和P的prototype一样的对象，避免了方式2的问题
+        Child.prototype = Object.create(Parent.prototype);
+        // 上面3种方式因为改了原型对象，都要修正回原构造器
+        Child.prototype.constructor = Child;
+        // 实现公用属性，c1.__proto__.count/Child.prototype.count
+        Child.prototype.count = 0;
+        let P1 = new Parent('P1',43);
+        let P2 = new Parent('P2',44);
+        let c1 = new Child('C1',0);
+        let c2 = new Child('C2',16);
+
+        console.log(Parent.prototype.constructor);
+        c1.show();
+        c2.show();
+        console.log(c1.show === c2.show);
+        console.log(c1.arr === c2.arr);
+        c1.__proto__.count += 10; // c1控制count+10
+        console.log(c2.__proto__.count);
+        console.log(Child.prototype.count);
+
+    </script>
+</body>
+</html>
